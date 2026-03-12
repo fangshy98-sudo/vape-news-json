@@ -24,8 +24,16 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Show SOURCE_URL
+        run: echo "SOURCE_URL=${SOURCE_URL}"
+
       - name: Run fetch script
         run: python fetch_news.py
+
+      - name: Show generated file
+        run: |
+          ls -lah docs || true
+          cat docs/news.json || true
 
       - name: Commit and push if changed
         run: |
