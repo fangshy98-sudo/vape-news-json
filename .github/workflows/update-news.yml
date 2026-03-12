@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      SOURCE_URL: "https://你的数据源地址"
+      SOURCE_URL: "https://2first.fangshy98.workers.dev/"
 
     steps:
       - name: Checkout repository
