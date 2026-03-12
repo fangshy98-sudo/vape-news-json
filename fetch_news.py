@@ -27,16 +27,30 @@ def normalize_items(data: dict):
     normalized = []
 
     for i, item in enumerate(items, start=1):
-        normalized.append(
-            {
-                "id": i,
-                "title": item.get("title", ""),
-                "link": item.get("link", ""),
-                "pubDate": item.get("pubDate", ""),
-                "source": item.get("source", ""),
-                "description": item.get("description", ""),
-            }
-        )
+        # 兼容 2FIRSTS worker 返回格式：{"no": 1, "content": "..."}
+        if "content" in item:
+            normalized.append(
+                {
+                    "id": item.get("no", i),
+                    "title": f"2FIRSTS电子烟早报 第{item.get('no', i)}条",
+                    "link": data.get("source", ""),
+                    "pubDate": data.get("date", ""),
+                    "source": "2FIRSTS",
+                    "description": item.get("content", ""),
+                }
+            )
+        else:
+            # 兼容你以后可能接入的标准新闻 JSON
+            normalized.append(
+                {
+                    "id": i,
+                    "title": item.get("title", ""),
+                    "link": item.get("link", ""),
+                    "pubDate": item.get("pubDate", ""),
+                    "source": item.get("source", ""),
+                    "description": item.get("description", ""),
+                }
+            )
 
     return normalized
 
